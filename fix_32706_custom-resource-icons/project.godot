@@ -1,0 +1,36 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Resource",
+"class": &"A_Adventurer",
+"language": &"GDScript",
+"path": "res://scripts_parent/scripts/adventurer.gd"
+}, {
+"base": "Resource",
+"class": &"A_Armor",
+"language": &"GDScript",
+"path": "res://scripts_parent/scripts/armor.gd"
+}, {
+"base": "Resource",
+"class": &"A_Weapon",
+"language": &"GDScript",
+"path": "res://scripts_parent/scripts/weapon.gd"
+}]
+_global_script_class_icons={
+"A_Adventurer": "res://scripts_parent/scripts/icons/animatable_body_2d.svg",
+"A_Armor": "res://scripts_parent/scripts/icons/clipboard.svg",
+"A_Weapon": "res://scripts_parent/scripts/icons/anchor.svg"
+}
+
+[application]
+
+run/main_scene="res://test.tscn"
+config/features=PackedStringArray("4.0")

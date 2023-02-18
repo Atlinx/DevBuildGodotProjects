@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3]
+
+[ext_resource type="Resource" uid="uid://cbrhhbdtsmofu" path="res://resources/steel_chestplate.tres" id="1_tdx4p"]
+[ext_resource type="Script" path="res://scripts/adventurer.gd" id="1_yixn3"]
+[ext_resource type="Resource" uid="uid://b132h7nw73gyj" path="res://resources/folder/stone_sword.tres" id="2_hrw4n"]
+
+[resource]
+script = ExtResource( "1_yixn3" )
+health = 20
+damage = 5
+mana = 50
+weapon = ExtResource( "2_hrw4n" )
+armor = ExtResource( "1_tdx4p" )
+name = "Knight"

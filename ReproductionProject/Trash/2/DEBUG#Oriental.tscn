@@ -1,0 +1,70 @@
+[gd_scene load_steps=6 format=3 uid="uid://2avkexj8s08v"]
+
+[ext_resource type="Texture2D" uid="uid://dt1h0h7mb58w1" path="res://icon.png" id="1"]
+
+[sub_resource type="GDScript" id="1"]
+script/source = "extends Node2D
+
+func a():
+	var val = \"2\"
+	b({1: val})
+	var dict = {1: val}
+
+func _physics_process(delta: float) -> void:
+	pass
+#	print(OS.get_screen_orientation())
+
+func b(d: Dictionary):
+	pass
+"
+
+[sub_resource type="Animation" id="3"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(193.592, 105.222)]
+}
+
+[sub_resource type="Animation" id="2"]
+resource_name = "Nowa animacja"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Icon:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(193.592, 105.222), Vector2(355.227, 189.407)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wqvar"]
+_data = {
+"Nowa animacja": SubResource( "2" ),
+"RESET": SubResource( "3" )
+}
+
+[node name="Node2D" type="Node2D"]
+script = SubResource( "1" )
+
+[node name="Icon" type="Sprite2D" parent="."]
+editor_description = "deditor
+nenitor"
+position = Vector2(259, 489)
+texture = ExtResource( "1" )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource( "AnimationLibrary_wqvar" )
+}

@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bdapd2tueckns"]
+
+[ext_resource type="PackedScene" uid="uid://j24axtgmboe3" path="res://2D.tscn" id="1_irqbm"]
+
+[node name="Node2D" instance=ExtResource( "1_irqbm" )]
+
+[node name="Control" type="Control" parent="Parent" index="0"]
+offset_right = 40.0
+offset_bottom = 40.0

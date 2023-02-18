@@ -1,0 +1,167 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw8mjlif786qk"]
+
+[sub_resource type="GDScript" id="GDScript_4cvl5"]
+script/source = "extends Control
+
+func _ready() -> void:
+#	await RenderingServer.frame_post_draw
+#	$SubViewport.get_texture().get_image().save_png(\"res://Test.png\")
+	
+	var tree = $Tree as Tree
+	
+	var root = tree.create_item()
+	root.set_text(0, \"Test0\")
+	
+	for i in 8:
+		var item = tree.create_item(root)
+		item.add_button(0, preload(\"res://icon.png\"))
+		item.set_text(0, str(\"Test1\", i))
+	
+	for i in 1:
+		var item = tree.create_item(root)
+		item.set_editable(0, true)
+		item.set_cell_mode(0, TreeItem.CELL_MODE_CHECK)
+		item.set_text(0, str(\"QQQ\", i))
+	
+	for i in 1:
+		var item = tree.create_item(root)
+		item.set_cell_mode(0, TreeItem.CELL_MODE_CUSTOM)
+		item.set_editable(0, true)
+		item.set_text(0, str(\"CCC\", i))
+	
+	for i in 1:
+		var item = tree.create_item(root)
+		item.set_cell_mode(0, TreeItem.CELL_MODE_ICON)
+		item.set_editable(0, true)
+		item.set_icon(0, preload(\"res://icon.png\"))
+		item.set_text(0, str(\"III\", i))
+	
+	for i in 1:
+		var item = tree.create_item(root)
+		item.set_cell_mode(0, TreeItem.CELL_MODE_RANGE)
+		item.set_range_config(0, 0, 100, 0.1)
+		item.set_editable(0, true)
+#		item.set_icon(0, preload(\"res://icon.png\"))
+		item.set_text(0, str(\"RRR\", i))
+	
+	for i in 1:
+		var item = tree.create_item(root)
+		item.set_cell_mode(0, TreeItem.CELL_MODE_STRING)
+		item.set_editable(0, true)
+		item.set_icon(0, preload(\"res://icon.png\"))
+		item.set_text(0, str(\"SSS\", i))
+	
+	for i in 4:
+		var item = root.get_first_child().create_child()
+		item.set_editable(0, true)
+		item.set_text(0, str(\"Test2\", i))
+	
+	var item = root.get_first_child()
+	for i in 4:
+		item = item.create_child()
+		item.set_text(0, str(\"Test\", i))
+
+func _on_tree_gui_input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_MIDDLE:
+		var tree = $Tree as Tree
+		var item = tree.get_item_at_position(event.position)
+		if item:
+			var tw = create_tween()
+			tw.tween_property(item, \"visible\", false, 0)
+			tw.tween_interval(1)
+			tw.tween_property(item, \"visible\", true, 0)
+
+
+func _on_tree_button_clicked(item: TreeItem, column: int, id: int, mouse_button_index: int) -> void:
+	prints(\"_on_tree_button_clicked\", item, column, id, mouse_button_index)
+
+
+func _on_tree_cell_selected() -> void:
+	prints(\"_on_tree_cell_selected\")
+
+
+func _on_tree_check_propagated_to_item(item: TreeItem, column: int) -> void:
+	prints(\"_on_tree_check_propagated_to_item\", item, column)
+
+
+func _on_tree_column_title_pressed(column: int) -> void:
+	prints(\"_on_tree_column_title_pressed\", column)
+
+
+func _on_tree_custom_item_clicked(mouse_button_index: int) -> void:
+	prints(\"_on_tree_custom_item_clicked\", mouse_button_index)
+
+
+func _on_tree_custom_popup_edited(arrow_clicked: bool) -> void:
+	prints(\"_on_tree_custom_popup_edited\", arrow_clicked)
+
+
+func _on_tree_empty_clicked(position: Vector2, mouse_button_index: int) -> void:
+	prints(\"_on_tree_empty_clicked\")
+
+
+func _on_tree_item_activated() -> void:
+	prints(\"_on_tree_item_activated\")
+
+
+func _on_tree_item_collapsed(item: TreeItem) -> void:
+	prints(\"_on_tree_item_collapsed\", item)
+
+
+func _on_tree_item_custom_button_pressed() -> void:
+	prints(\"_on_tree_item_custom_button_pressed\")
+
+
+func _on_tree_item_double_clicked() -> void:
+	prints(\"_on_tree_item_double_clicked\")
+
+
+func _on_tree_item_edited() -> void:
+	prints(\"_on_tree_item_edited\")
+
+
+func _on_tree_item_mouse_selected(position: Vector2, mouse_button_index: int) -> void:
+	prints(\"_on_tree_item_mouse_selected\", position, mouse_button_index)
+
+
+func _on_tree_item_selected() -> void:
+	prints(\"_on_tree_item_selected\")
+
+
+func _on_tree_multi_selected(item: TreeItem, column: int, selected: bool) -> void:
+	prints(\"_on_tree_multi_selected\", item, column, selected)
+
+
+func _on_tree_nothing_selected() -> void:
+	prints(\"_on_tree_nothing_selected\")
+"
+
+[sub_resource type="Theme" id="Theme_8u2pg"]
+
+[node name="Control" type="Control"]
+offset_right = 40.0
+offset_bottom = 40.0
+script = SubResource( "GDScript_4cvl5" )
+
+[node name="Tree" type="Tree" parent="."]
+offset_left = 275.0
+offset_top = 83.0
+offset_right = 741.0
+offset_bottom = 455.0
+theme = SubResource( "Theme_8u2pg" )
+hide_folding = true
+
+[connection signal="cell_selected" from="Tree" to="." method="_on_tree_cell_selected"]
+[connection signal="check_propagated_to_item" from="Tree" to="." method="_on_tree_check_propagated_to_item"]
+[connection signal="column_title_pressed" from="Tree" to="." method="_on_tree_column_title_pressed"]
+[connection signal="custom_item_clicked" from="Tree" to="." method="_on_tree_custom_item_clicked"]
+[connection signal="custom_popup_edited" from="Tree" to="." method="_on_tree_custom_popup_edited"]
+[connection signal="item_activated" from="Tree" to="." method="_on_tree_item_activated"]
+[connection signal="item_collapsed" from="Tree" to="." method="_on_tree_item_collapsed"]
+[connection signal="item_custom_button_pressed" from="Tree" to="." method="_on_tree_item_custom_button_pressed"]
+[connection signal="item_double_clicked" from="Tree" to="." method="_on_tree_item_double_clicked"]
+[connection signal="item_edited" from="Tree" to="." method="_on_tree_item_edited"]
+[connection signal="item_mouse_selected" from="Tree" to="." method="_on_tree_item_mouse_selected"]
+[connection signal="item_selected" from="Tree" to="." method="_on_tree_item_selected"]
+[connection signal="multi_selected" from="Tree" to="." method="_on_tree_multi_selected"]
+[connection signal="nothing_selected" from="Tree" to="." method="_on_tree_nothing_selected"]

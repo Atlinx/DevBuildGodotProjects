@@ -1,0 +1,50 @@
+[gd_scene load_steps=6 format=3 uid="uid://du2i20pf7tx5u"]
+
+[sub_resource type="GDScript" id="GDScript_dkfp2"]
+script/source = "extends Area2D
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	$Sprite.texture = $Viewport.get_texture()
+"
+
+[sub_resource type="RectangleShape2D" id="2"]
+size = Vector2(80, 80)
+
+[sub_resource type="BoxMesh" id="3"]
+
+[sub_resource type="GDScript" id="5"]
+script/source = "extends MeshInstance3D
+
+func _ready() -> void:
+	create_tween().set_loops().tween_property(self, \"rotation:y\", PI, 1.0).as_relative()
+"
+
+[sub_resource type="Environment" id="Environment_eg3r4"]
+ambient_light_source = 2
+ambient_light_color = Color(0.988235, 0.988235, 0.988235, 1)
+
+[node name="Ability" type="Area2D"]
+script = SubResource( "GDScript_dkfp2" )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( "2" )
+
+[node name="Sprite" type="Sprite2D" parent="."]
+
+[node name="Viewport" type="SubViewport" parent="."]
+transparent_bg = true
+gui_disable_input = true
+size = Vector2i(160, 160)
+render_target_update_mode = 4
+
+[node name="Camera" type="Camera3D" parent="Viewport"]
+transform = Transform3D(1, 0, 0, 0, 0.835999, 0.548731, 0, -0.548731, 0.835999, 0, 2.2079, 3.05029)
+
+[node name="MeshInstance" type="MeshInstance3D" parent="Viewport"]
+mesh = SubResource( "3" )
+script = SubResource( "5" )
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="Viewport"]
+environment = SubResource( "Environment_eg3r4" )

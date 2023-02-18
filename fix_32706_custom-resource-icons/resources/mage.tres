@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=4 format=3 uid="uid://d1dp8yds1egpq"]
+
+[ext_resource type="Resource" path="res://resources/sub_folder/leggings.tres" id="1_5yae4"]
+[ext_resource type="Script" path="res://scripts_parent/scripts/adventurer.gd" id="1_78kic"]
+[ext_resource type="Resource" path="res://resources/sub_folder/stone_sword.tres" id="3_qayex"]
+
+[resource]
+script = ExtResource( "1_78kic" )
+health = null
+damage = 100
+mana = null
+weapon = ExtResource( "3_qayex" )
+armor = ExtResource( "1_5yae4" )
+name = null

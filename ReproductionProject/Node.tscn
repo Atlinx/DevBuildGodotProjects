@@ -1,0 +1,20 @@
+[gd_scene load_steps=2 format=3 uid="uid://df68iquc0hklx"]
+
+[sub_resource type="GDScript" id="GDScript_4u0nk"]
+script/source = "@tool
+extends Node
+
+@export var test = 1: set = set_test
+
+func set_test(t):
+	test = t
+	
+	if not is_inside_tree():
+		await ready
+	
+	print(\"ok\")
+"
+
+[node name="Node" type="Node"]
+script = SubResource( "GDScript_4u0nk" )
+test = 3

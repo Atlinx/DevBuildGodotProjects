@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts_parent/scripts/armor.gd" id="1_qhsph"]
+
+[resource]
+script = ExtResource( "1_qhsph" )
+defense = 3
+level = 3
+name = "Steel Chestplate"

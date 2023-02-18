@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://c2xsxp0binnts"]
+
+[node name="Node" type="Node"]
+
+[node name="TODO" type="Node" parent="."]
+editor_description = "Ultra rozwałka masakra itp.
+
+Zabezpieczenia też i trzeba generator zniszczyć
+
+Drabiny"
+
+[node name="TODO2" type="Node" parent="."]
+editor_description = "Dopóki się nie wyjdzie z tego małego pomieszczenia to nie pokazywać otoczenia"

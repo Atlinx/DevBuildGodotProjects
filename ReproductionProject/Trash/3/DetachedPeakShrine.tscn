@@ -1,0 +1,92 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://Maps/Scripts/Map.gd" id="1"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/Technical/Abyss.tscn" id="2"]
+[ext_resource type="Texture" path="res://Trash/3/Maps/World5/Landscape/DetachedPeakShrineBackdrop.png" id="3"]
+[ext_resource type="Texture" path="res://Trash/3/Maps/World5/Landscape/DetachedPeakShrine.png" id="4"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/Objects/Blocks/ItemBlock/ItemBlock.tscn" id="5"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/NPC/NPC.tscn" id="6"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/Objects/Gameplay/Save/SavePoint.tscn" id="7"]
+[ext_resource type="PackedScene" path="res://Trash/3/Backgrounds/Mountains/RockMountains.tscn" id="8"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/Environment/Weather/WindyMountain.tscn" id="9"]
+
+
+[sub_resource type="GDScript" id=1]
+script/source = "extends CollisionPolygon2D
+
+func _ready() -> void:
+	if not OS.has_feature(\"demo\"):
+		queue_free()
+
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "tool
+extends NPC
+
+func interact():
+	setup_talk()
+	if Save.do_event(\"world_revealed\"):
+		Dialogue.load_dialogue(\"DetachedPeakDialogue\")
+		Dialogue.get_dialogue_node().bind_entity(\"Muru\", self)
+		Dialogue.get_dialogue_node().trigger.connect(on_trigger)
+		Dialogue.get_dialogue_node().request_branch.connect(request_branch)
+		Save.progress_quest(\"crystals\", 0)
+	else:
+		Dialogue.simple_dialogue(\"Muru\", \"Good luck on your journey.\")
+
+func on_trigger(trigger: String):
+	if trigger == \"scarf\":
+		Save.add_item(\"Mountain Scarf\")
+
+func request_branch(branch: String, selector: Dialogue.BranchSelector):
+	if branch == \"demo\":
+		selector.selection = int(not OS.has_feature(\"demo\"))
+"
+
+[node name="Map" type="StaticBody2D"]
+script = ExtResource( 1 )
+background = ExtResource( 8 )
+background_offset = Vector2( -8, -4 )
+weather = ExtResource( 9 )
+bounds = 4
+
+[node name="Landscape" type="Sprite2D" parent="."]
+z_index = 5
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Backdrop" type="Sprite2D" parent="."]
+z_index = -1
+texture = ExtResource( 3 )
+centered = false
+
+[node name="Colliders" type="Node2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Colliders"]
+polygon = PoolVector2Array( 180, 1920, 180, 1830, 300, 1830, 330, 1800, 330, 1680, 390, 1680, 390, 1620, 1140, 1620, 1140, 1680, 1170, 1680, 1170, 1890, 1200, 1890, 1200, 1920 )
+
+[node name="CollisionPolygon2D2" type="CollisionPolygon2D" parent="Colliders"]
+polygon = PoolVector2Array( 390, 960, 1140, 960, 1140, 1080, 1110, 1080, 1080, 1110, 1080, 1260, 1020, 1260, 1020, 1110, 990, 1080, 540, 1080, 510, 1110, 510, 1260, 450, 1260, 450, 1110, 420, 1080, 390, 1080 )
+
+[node name="DemoWall" type="CollisionPolygon2D" parent="Colliders"]
+visible = false
+polygon = PoolVector2Array( 1620, 1920, 1620, 540, 180, 540, 180, 1830, 0, 1830, 0, 330, 1920, 330, 1920, 1920 )
+script = SubResource( 1 )
+
+[node name="ItemBlock" parent="." instance=ExtResource( 5 )]
+position = Vector2( 630, 750 )
+content_data = "World 5 Map"
+secret = true
+
+[node name="Muru" parent="." instance=ExtResource( 6 )]
+position = Vector2( 1080, 1620 )
+script = SubResource( 2 )
+skin = "Muru"
+flip = true
+
+[node name="SavePoint" parent="." instance=ExtResource( 7 )]
+position = Vector2( 765, 1380 )
+
+[node name="Abyss" parent="." instance=ExtResource( 2 )]
+position = Vector2( 1920, 2550 )

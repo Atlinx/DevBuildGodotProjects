@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://b132h7nw73gyj"]
+
+[ext_resource type="Script" path="res://weapon.gd" id="1_143u6"]
+
+[resource]
+script = ExtResource( "1_143u6" )
+damage = 5
+level = 3
+name = "Stone Sword"

@@ -1,0 +1,660 @@
+[gd_scene load_steps=40 format=3]
+
+[ext_resource type="Texture" path="res://Tools/DebugRoom/DebugRoom.png" id="1"]
+[ext_resource type="Texture" path="res://Nodes/Enemies/CommonBot/CommonBot.png" id="3"]
+[ext_resource type="PackedScene" path="res://Nodes/Technical/ActivateOnVisible.tscn" id="4"]
+[ext_resource type="PackedScene" path="res://Trash/3/Nodes/NPC/NPC.tscn" id="5"]
+[ext_resource type="DynamicFont" path="res://Resources/Fonts/LocationFont.tres" id="6"]
+[ext_resource type="PackedScene" path="res://Scenes/Game/Game.tscn" id="7"]
+[ext_resource type="Texture" uid="uid://dt1h0h7mb58w1" path="res://icon.png" id="8"]
+[ext_resource type="PackedScene" path="res://Nodes/Enemies/CommonBot/CommonBot.tscn" id="11"]
+[ext_resource type="Texture" path="res://Tools/TrainingDummy.png" id="12"]
+[ext_resource type="PackedScene" path="res://Nodes/Objects/Blocks/Bricks/Bricks.tscn" id="14"]
+[ext_resource type="PackedScene" path="res://Nodes/Objects/Interactive/Door/Door.tscn" id="15"]
+[ext_resource type="PackedScene" path="res://Nodes/Enemies/Fish/Lavafish.tscn" id="16"]
+[ext_resource type="PackedScene" path="res://Nodes/Objects/Interactive/Target/Target.tscn" id="17"]
+[ext_resource type="Script" path="res://Nodes/Objects/Interactive/Target/TargetManager.gd" id="18"]
+[ext_resource type="PackedScene" path="res://Nodes/Technical/Portal/Portal.tscn" id="20"]
+
+
+[sub_resource type="GDScript" id=1]
+resource_name = "DebugInitializer"
+script/source = "extends Node
+
+func _ready() -> void:
+	Utils.game.player.position = $Initializer/Player.position + Vector2(0, -75)
+	Utils.game.camera_controller.initialize(Utils.game.player)
+	
+#	Save.data.base_intelligence = 5
+
+	Save.data.base_max_hp = 7777
+	Save.data.base_max_fp = 300000
+	Save.data.base_max_ep = 300000
+	Save.data.base_luck = 10
+	Save.data.base_regen = 3
+	Save.data.base_strength = 100
+	Save.data.base_intelligence = 300#0
+	
+#	Save.data.equipment.weapon = \"Fiery Aura\"
+#	Save.data.equipment.weapon = \"Aqua Disc\"
+#	Save.data.equipment.weapon = \"Elementron\"
+#	Save.data.equipment.weapon = \"Bomb\"
+#	Save.data.equipment.weapon = \"Moon Gun\"
+#	Save.data.equipment.weapon = \"Rebound Explosive\"
+	Save.data.equipment.weapon = \"Motor Blade\"
+#	Save.data.equipment.weapon = \"Ghostly Buster\"
+#	Save.data.equipment.weapon = \"POW Hammer\"
+#	Save.data.equipment.weapon = \"Sniper Rifle\"
+#	Save.data.equipment.weapon = \"Nailgun\"
+#	Save.data.equipment.weapon = \"Stone Guard\"
+#	Save.data.equipment.weapon = \"Mushroom Launcher\"
+	Save.data.equipment.weapon2 = \"Plasma Armor\"
+#	Save.data.equipment.magic = \"Plasma Holly\"
+#	Save.data.equipment.magic = \"Accurst Begonia\"
+#	Save.data.equipment.magic = \"Rock Borage\"
+	Save.data.equipment.magic = \"Ice Rose\"
+#	Save.data.equipment.magic = \"Lava Lavender\"
+#	Save.data.equipment.magic = \"Fire Rose\"
+#	Save.data.equipment.magic = \"Solardendron\"
+#	Save.data.equipment.magic = \"Swift Abatina\"
+#	Save.data.equipment.magic = \"Common Antimone\"
+#	Save.data.equipment.magic = \"Magnecrocus\"
+#	Save.data.equipment.magic = \"Seeking Moonflower\"
+#	Save.data.equipment.magic = \"Frost Crocus\"
+#	Save.data.equipment.magic = \"Bubble Larkspur\"
+#	Save.data.equipment.magic = \"Ashen Anemone\"
+#	Save.data.equipment.magic = \"Corrosive Snapdragon\"
+#	Save.data.equipment.magic = \"EM Larkspur\"
+#	Save.data.equipment.magic = \"Thunderdendron\"
+#	Save.data.equipment.magic2 = \"Fire Rose\"
+#	Save.data.equipment.boots = \"Fiery Flip-Flops\"
+	Save.data.equipment.accessory1 = \"Life Armband\"
+	Save.data.equipment.accessory2 = \"Geoforce Compass\"
+#	Save.data.equipment.scarf = \"Nanoscarf\"
+	Save.equip_item(\"scarf\", \"Ammo Belt\")
+	Save.equip_item(\"suit\", \"Ghastly Sweater\")
+	
+	Save.data.abilities[\"00double_jump\"] = true
+	Save.data.abilities[\"01triple_jump\"] = true
+	Save.data.abilities[\"02ground_pound\"] = true
+	Save.data.abilities[\"03swimming\"] = true
+	Save.data.abilities[\"04ground_pound\"] = true
+	Save.data.abilities[\"05weapon_module\"] = true
+	Save.data.abilities[\"06slide\"] = true
+	Save.data.abilities[\"07wallrun\"] = true
+	Save.data.abilities[\"08crits\"] = false
+#	Save.data.abilities[\"09coins\"] = true
+	Save.data.abilities[\"10spin_jump\"] = true
+	Save.data.abilities[\"11wall_jump\"] = true
+	Save.data.abilities[\"12slowfall\"] = true
+	
+	Save.data.flower_levels[\"Fire Rose\"] = 2000
+#	Save.data.flower_levels[\"Ice Rose\"] = 2400
+	Save.data.flower_levels[\"Bubble Larkspur\"] = 4500
+	Save.data.flower_levels[\"EMp Larkspur\"] = 4500
+	Save.data.flower_levels[\"Frost Crocus\"] = 200
+	Save.data.flower_levels[\"Seeking Moonflower\"] = 4000
+	
+	Save.add_item(\"Lava Lavender\", 1, false)
+	Save.add_item(\"Fire Rose\", 1, false)
+	Save.add_item(\"Ice Rose\", 1, false)
+	Save.add_item(\"Thunderdendron\", 1, false)
+	Save.add_item(\"Hydro-Mortar\", 1, false)
+	Save.add_item(\"Treasure Scope\", 1, false)
+	Save.add_item(\"Vile Gem\", 1, false)
+	
+#	Save.add_booster(0)
+#	Save.add_booster(1)
+	Save.add_item(\"XP Container S\", 10, false)
+	
+	Save.add_item(\"SAC Piece\", 3, false)
+#	Save.give_quest(\"veggie_quest\")
+	
+	Save.refresh_stats()
+	Save.heal(true)
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F9:
+		get_tree().call_deferred(\"reload_current_scene\")
+	
+	if event is InputEventKey and event.pressed and event.keycode == KEY_F7:
+		Utils.game.player.goto($Icon.global_position.x)
+
+
+func _on_Game_tree_entered() -> void:
+	$Game/Game.map = $Game/MapHehe
+
+"
+
+[sub_resource type="GDScript" id=2]
+script/source = "extends Node
+
+func _ready() -> void:
+	Save.create_save(\"debug room\")
+	Save.data.events.append(\"menu_tutorial\")
+	Save.data.events.append(\"magic_tutorial\")
+	Save.data.events.append(\"dialogue_tutorial\")
+	Utils.game.current_world = \"World9\"
+	await get_tree().idle_frame
+	Utils.game.root = get_parent()
+
+"
+
+[sub_resource type="GDScript" id=3]
+script/source = "extends Map
+
+func _init() -> void:
+	set_meta(\"debug_room\", true)
+	map_data = {name = \"debug room\", rect = Rect2(0, 0, 2, 1), exits = []}
+
+"
+
+[sub_resource type="Shader" id=4]
+code = "shader_type canvas_item;
+
+uniform sampler2D normals;
+
+void fragment() {
+	vec2 uv = SCREEN_UV;
+	uv.x += (texture(normals, UV + vec2(0, 1) * TIME * 0.1).g * 0.1 - 0.05) * 0.5 * UV.y;
+	uv.y += (texture(normals, UV + vec2(0, 1) * TIME * 0.1).g * 0.1 - 0.05) * UV.y;
+	vec4 color = textureLod(SCREEN_TEXTURE, uv, 0);
+	
+	COLOR = color;
+}
+"
+
+[sub_resource type="OpenSimplexNoise" id=5]
+
+[sub_resource type="NoiseTexture" id=6]
+as_normalmap = true
+noise = SubResource( 5 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 4 )
+shader_param/normals = SubResource( 6 )
+
+[sub_resource type="GDScript" id=8]
+script/source = "extends Polygon2D
+
+func _ready() -> void:
+	if visible:
+		var poly := CollisionPolygon2D.new()
+		poly.polygon = polygon
+		poly.position = position
+		get_parent().call_deferred(\"add_child\", poly)
+
+"
+
+[sub_resource type="GDScript" id=9]
+script/source = "extends Node2D
+
+var dup
+
+func _process(delta: float) -> void:
+	if not visible:
+		return
+	
+	if not dup and get_child_count():
+		dup = get_child(0).duplicate()
+	
+	if dup and get_child_count() == 0:
+		add_child(dup)
+		dup = null
+		
+
+"
+
+[sub_resource type="GDScript" id=10]
+script/source = "tool
+extends NPC
+
+func interact():
+	setup_talk()
+	var b = Dialogue.custom_dialogue()
+	b.add_message(\"Lelona\", \"Hello world, I give quest\")
+	b.add_message(\"Hana\", \"I'm not world\")
+	b.add_message(\"Lelona\", \"You are a world to me, honey\")
+	b.add_message(\"Hana\", \"CRINGE\")
+	b.commit()
+	Save.give_quest(\"crystals\")
+
+"
+
+[sub_resource type="GDScript" id=11]
+script/source = "extends Node2D
+
+func _ready() -> void:
+	if not visible:
+		queue_free()
+
+"
+
+[sub_resource type="GDScript" id=12]
+script/source = "extends BasicEnemy
+
+const WALK_FORCE := 3000
+const WALK_SPEED := 200
+
+@export var walk_left := true
+
+func _ready():
+	init_enemy(\"CommonBot\")
+	hp = 1000
+	max_hp = 1000
+	sprite.flip_h = walk_left
+
+func on_process(delta: float):
+	var force := Utils.gravity()
+
+	if walk_left:
+		if velocity.x != -WALK_SPEED:
+			force.x = sign(-WALK_SPEED - velocity.x) * WALK_FORCE
+	else:
+		if velocity.x != WALK_SPEED:
+			force.x = sign(WALK_SPEED - velocity.x) * WALK_FORCE
+	
+	velocity += force * delta
+	
+	if get_slide_count() > 0 and is_on_floor():
+		rotation = lerp_angle(rotation, get_slide_collision(0).normal.angle() + PI/2, 0.1)
+	
+	velocity = move_and_slide_with_snap(velocity, Vector2.DOWN * 30, Vector2.UP)
+	if is_on_wall() and get_slide_collision(0).normal.y > -0.2 or velocity.x > 0 == walk_left:
+		walk_left = !walk_left
+		sprite.flip_h = walk_left
+
+"
+
+[sub_resource type="CapsuleShape2D" id=13]
+radius = 20.0
+
+[sub_resource type="Animation" id=14]
+step = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 3, 4 ]
+}
+
+[sub_resource type="Animation" id=15]
+length = 4.0
+loop_mode = 1
+step = 1.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0, 2 ]
+}
+
+[sub_resource type="RectangleShape2D" id=16]
+size = Vector2( 60.0, 60.0 )
+
+[sub_resource type="GDScript" id=17]
+script/source = "extends PlayerDetector
+
+func _on_PlayerDetector_player_detected() -> void:
+	Dialogue.load_dialogue(\"BlotemShoes\")
+	Dialogue.get_dialogue_node().bind_entity(\"Blotem\", Utils.game.player)
+
+"
+
+[sub_resource type="RectangleShape2D" id=18]
+size = Vector2( 90.0, 90.0 )
+
+[sub_resource type="GDScript" id=19]
+script/source = "extends Enemy
+
+var last_hp: int
+var damage: int
+
+func _ready() -> void:
+	init_enemy(\"CommonBot\")
+	hp = 9999999
+	last_hp = hp
+	enemy_data.name = \"Unity\"
+	enemy_data.resistance.clear()
+
+func on_damage():
+	damage += last_hp - hp
+	last_hp = hp
+
+func flush_damage() -> void:
+	$Label.text = str(\"DPS \", damage)
+	damage = 0
+
+"
+
+[sub_resource type="RectangleShape2D" id=20]
+size = Vector2( 120.0, 120.0 )
+
+[sub_resource type="StyleBoxFlat" id=21]
+bg_color = Color( 0, 0, 0, 1 )
+
+[sub_resource type="GDScript" id=24]
+script/source = "extends Enemy
+
+@export var element: String
+
+var last_hp: int
+var damage: int
+
+func _ready() -> void:
+	init_enemy(\"CommonBot\")
+	hp = 9999999
+	last_hp = hp
+	enemy_data = enemy_data.duplicate()
+	enemy_data.name = \"Unity\"
+	enemy_data.resistance.clear()
+	enemy_data.element = Const.Elements[element]
+
+"
+
+[sub_resource type="GDScript" id=22]
+script/source = "extends GenericInteractable
+
+func _on_GenericInteractable_interacted() -> void:
+	Utils.game.player.set_status(Const.Status.PETRIFIED)
+	await get_tree().create_timer(1).timeout
+	Utils.game.player.damage(Vector2(), {damage = 10000})
+
+"
+
+[sub_resource type="RectangleShape2D" id=23]
+
+[node name="DebugRoom" type="Control"]
+script = SubResource( 1 )
+
+[node name="Initializer" type="Node" parent="."]
+script = SubResource( 2 )
+
+[node name="Player" type="Position2D" parent="Initializer"]
+position = Vector2( 720, 1860 )
+
+[node name="Game" parent="." instance=ExtResource( 7 )]
+
+[node name="MapHehe" type="StaticBody2D" parent="Game"]
+script = SubResource( 3 )
+
+[node name="Trashlol" type="Node2D" parent="Game/MapHehe"]
+
+[node name="Sprite" type="Sprite2D" parent="Game/MapHehe/Trashlol"]
+z_index = 5
+texture = ExtResource( 1 )
+centered = false
+offset = Vector2( -1050, 0 )
+
+[node name="ColorRect" type="ColorRect" parent="Game/MapHehe/Trashlol/Sprite"]
+visible = false
+material = SubResource( 7 )
+offset_left = 795.0
+offset_top = 1740.0
+offset_right = 945.0
+offset_bottom = 1875.0
+
+[node name="CollisionPolygon2D5" type="Polygon2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 330, -240 )
+polygon = PoolVector2Array( 330, 1335, 330, 1560, 510, 1560, 510, 1335 )
+script = SubResource( 8 )
+
+[node name="CollisionPolygon2D7" type="Polygon2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( -270, 15 )
+polygon = PoolVector2Array( 330, 1335, 330, 1845, 720, 1845, 840, 1725, 720, 1530, 600, 1515, 540, 1455, 540, 1395, 480, 1335 )
+script = SubResource( 8 )
+
+[node name="CollisionPolygon2D9" type="Polygon2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 1575, 15 )
+polygon = PoolVector2Array( 660, 1440, 615, 1845, 720, 1845, 795, 1680 )
+script = SubResource( 8 )
+
+[node name="CollisionPolygon2D8" type="Polygon2D" parent="Game/MapHehe/Trashlol"]
+visible = false
+position = Vector2( 600, 15 )
+polygon = PoolVector2Array( 450, 1725, 330, 1845, 720, 1845, 720, 1710 )
+script = SubResource( 8 )
+
+[node name="CollisionPolygon2D6" type="Polygon2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 1200, -255 )
+polygon = PoolVector2Array( 660, 1545, 660, 1560, 1110, 1560, 1110, 1545 )
+script = SubResource( 8 )
+
+[node name="Spawner" type="Node2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 2355, 1830 )
+script = SubResource( 9 )
+
+[node name="CommonBot" parent="Game/MapHehe/Trashlol/Spawner" instance=ExtResource( 11 )]
+
+[node name="Spawner2" type="Node2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 2445, 1830 )
+script = SubResource( 9 )
+
+[node name="CommonBot" parent="Game/MapHehe/Trashlol/Spawner2" instance=ExtResource( 11 )]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="Game/MapHehe/Trashlol"]
+
+[node name="ColorRect" type="ColorRect" parent="Game/MapHehe/Trashlol/ParallaxBackground"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1186.0
+offset_top = -900.0
+offset_right = 5219.0
+offset_bottom = 2835.0
+color = Color( 0.1044, 0.18108, 0.36, 1 )
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="Game/MapHehe/Trashlol/ParallaxBackground"]
+motion_scale = Vector2( 0.5, 0.5 )
+
+[node name="Label" type="Label" parent="Game/MapHehe/Trashlol/ParallaxBackground/ParallaxLayer"]
+modulate = Color( 1, 1, 1, 0.25098 )
+offset_left = 900.0
+offset_top = 675.0
+offset_right = 1327.0
+offset_bottom = 747.0
+custom_fonts/font = ExtResource( 6 )
+text = "DEBUG ROOM"
+
+[node name="Lelona" parent="Game/MapHehe/Trashlol" instance=ExtResource( 5 )]
+position = Vector2( 2385, 525 )
+script = SubResource( 10 )
+skin = "Lelona"
+
+[node name="Enemies3" type="Node2D" parent="Game/MapHehe/Trashlol"]
+visible = false
+script = SubResource( 11 )
+
+[node name="CommonBot" type="KinematicBody2D" parent="Game/MapHehe/Trashlol/Enemies3"]
+position = Vector2( 2730, 1830 )
+script = SubResource( 12 )
+walk_left = false
+
+[node name="Collider" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot"]
+visible = false
+shape = SubResource( 13 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot"]
+autoplay = "Walk"
+playback_speed = 4.0
+anims/Squash = SubResource( 14 )
+anims/Walk = SubResource( 15 )
+
+[node name="LogicCollider" type="Area2D" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot"]
+
+[node name="Shape" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot/LogicCollider"]
+shape = SubResource( 16 )
+
+[node name="ActivateOnVisible" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot" instance=ExtResource( 4 )]
+position = Vector2( -30, -30 )
+rect = Rect2( 0, 0, 60, 60 )
+
+[node name="Sprite" type="Sprite2D" parent="Game/MapHehe/Trashlol/Enemies3/CommonBot"]
+texture = ExtResource( 3 )
+hframes = 5
+frame = 3
+
+[node name="CommonBot2" parent="Game/MapHehe/Trashlol/Enemies3" instance=ExtResource( 11 )]
+position = Vector2( 2820, 1830 )
+walk_left = false
+
+[node name="PlayerDetector" type="Area2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 3300, 210 )
+script = SubResource( 17 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/PlayerDetector"]
+shape = SubResource( 18 )
+
+[node name="DPSDUmmy" type="KinematicBody2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 1200, 1005 )
+z_index = 10
+script = SubResource( 19 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/DPSDUmmy"]
+shape = SubResource( 20 )
+
+[node name="LogicCollider" type="Area2D" parent="Game/MapHehe/Trashlol/DPSDUmmy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/DPSDUmmy/LogicCollider"]
+shape = SubResource( 20 )
+
+[node name="Sprite" type="Sprite2D" parent="Game/MapHehe/Trashlol/DPSDUmmy"]
+texture = ExtResource( 12 )
+
+[node name="Timer" type="Timer" parent="Game/MapHehe/Trashlol/DPSDUmmy"]
+autostart = true
+
+[node name="Label" type="Label" parent="Game/MapHehe/Trashlol/DPSDUmmy"]
+modulate = Color( 0, 1, 0.0627451, 1 )
+offset_left = -75.0
+offset_top = 120.0
+offset_right = 90.0
+offset_bottom = 150.0
+custom_styles/normal = SubResource( 21 )
+text = "DPS:"
+
+[node name="Dummy" type="KinematicBody2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 420, 1020 )
+scale = Vector2( 0.502845, 0.502845 )
+z_index = 10
+script = SubResource( 24 )
+element = "POISON"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Dummy"]
+shape = SubResource( 20 )
+
+[node name="LogicCollider" type="Area2D" parent="Game/MapHehe/Trashlol/Dummy"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Dummy/LogicCollider"]
+shape = SubResource( 20 )
+
+[node name="Sprite" type="Sprite2D" parent="Game/MapHehe/Trashlol/Dummy"]
+modulate = Color( 0.827451, 0, 1, 1 )
+texture = ExtResource( 12 )
+
+[node name="Dummy2" type="KinematicBody2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 510, 1020 )
+scale = Vector2( 0.502845, 0.502845 )
+z_index = 10
+script = SubResource( 24 )
+element = "STONE"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Dummy2"]
+shape = SubResource( 20 )
+
+[node name="LogicCollider" type="Area2D" parent="Game/MapHehe/Trashlol/Dummy2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/Dummy2/LogicCollider"]
+shape = SubResource( 20 )
+
+[node name="Sprite" type="Sprite2D" parent="Game/MapHehe/Trashlol/Dummy2"]
+modulate = Color( 0.14902, 0.14902, 0.14902, 1 )
+texture = ExtResource( 12 )
+
+[node name="Node2D" type="Node2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( -195, -465 )
+
+[node name="Bricks" parent="Game/MapHehe/Trashlol/Node2D" instance=ExtResource( 14 )]
+position = Vector2( 1185, 1995 )
+
+[node name="Bricks2" parent="Game/MapHehe/Trashlol/Node2D" instance=ExtResource( 14 )]
+position = Vector2( 1185, 1935 )
+
+[node name="Bricks3" parent="Game/MapHehe/Trashlol/Node2D" instance=ExtResource( 14 )]
+position = Vector2( 1185, 1875 )
+
+[node name="Bricks4" parent="Game/MapHehe/Trashlol/Node2D" instance=ExtResource( 14 )]
+position = Vector2( 1185, 1815 )
+
+[node name="Bricks5" parent="Game/MapHehe/Trashlol/Node2D" instance=ExtResource( 14 )]
+position = Vector2( 1185, 1755 )
+
+[node name="GenericInteractable" type="Area2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 1440, 1815 )
+script = SubResource( 22 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Game/MapHehe/Trashlol/GenericInteractable"]
+shape = SubResource( 23 )
+
+[node name="Lavafish" parent="Game/MapHehe/Trashlol" instance=ExtResource( 16 )]
+position = Vector2( 2355, 1395 )
+
+[node name="Node2D2" type="Node2D" parent="Game/MapHehe/Trashlol"]
+script = ExtResource( 18 )
+
+[node name="Target" parent="Game/MapHehe/Trashlol/Node2D2" instance=ExtResource( 17 )]
+position = Vector2( 1365, 1230 )
+
+[node name="Target2" parent="Game/MapHehe/Trashlol/Node2D2" instance=ExtResource( 17 )]
+position = Vector2( 1560, 1110 )
+
+[node name="Icon" type="Sprite2D" parent="Game/MapHehe/Trashlol"]
+position = Vector2( 1815, 1620 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 8 )
+
+[node name="Door" parent="Game/MapHehe/Trashlol" instance=ExtResource( 15 )]
+position = Vector2( 1215, 1380 )
+locked = true
+need_key = true
+
+[node name="Portal" parent="Game/MapHehe/Trashlol" instance=ExtResource( 20 )]
+position = Vector2( 1170, 1425 )
+
+[node name="ReferenceRect" type="ReferenceRect" parent="Game/MapHehe/Trashlol/Portal"]
+offset_left = -45.0
+offset_top = -180.0
+offset_right = 45.0
+editor_only = false
+
+[node name="Colliders" type="Node2D" parent="Game/MapHehe"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Game/MapHehe/Colliders"]
+polygon = PoolVector2Array( 60, 1860, 1399.38, 1860, 3091, 1860, 3091, 1560, 3270, 1560, 3270, 1860, 3480, 1860, 3480, 1500, 3690, 1500, 3690, 1860, 3780, 1860, 3780, 60, 60, 60, 60, 3645, -1350, 3645, -1350, -720, 6540, -720, 6480, 3615, 60, 3615 )
+
+[node name="Bricks" parent="Game/MapHehe" instance=ExtResource( 14 )]
+position = Vector2( 990, 1830 )
+
+[node name="Bricks2" parent="Game/MapHehe" instance=ExtResource( 14 )]
+position = Vector2( 990, 1770 )
+
+[node name="Bricks3" parent="Game/MapHehe" instance=ExtResource( 14 )]
+position = Vector2( 990, 1710 )
+
+[node name="Bricks4" parent="Game/MapHehe" instance=ExtResource( 14 )]
+position = Vector2( 990, 1650 )
+
+[node name="Bricks5" parent="Game/MapHehe" instance=ExtResource( 14 )]
+position = Vector2( 990, 1590 )
+

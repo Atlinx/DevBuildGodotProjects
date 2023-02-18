@@ -1,0 +1,9 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://btw3pc3mj3kuv"]
+
+[ext_resource type="Script" path="res://scripts_parent/scripts/weapon.gd" id="1_ny7je"]
+
+[resource]
+script = ExtResource( "1_ny7je" )
+damage = null
+level = null
+name = null
