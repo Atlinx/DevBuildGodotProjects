@@ -1,5 +1,6 @@
+@icon("./icons/animatable_body_2d.svg")
+class_name A_Adventurer
 extends Resource
-class_name A_Adventurer, "./icons/animatable_body_2d.svg"
 
 @export var health : int
 @export var damage : int

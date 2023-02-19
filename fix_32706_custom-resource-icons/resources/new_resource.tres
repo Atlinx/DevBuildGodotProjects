@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="A_Adventurer" load_steps=2 format=3 uid="uid://cved0cac5jwxo"]
+
+[ext_resource type="Script" path="res://scripts_parent/scripts/adventurer.gd" id="1_fmlc4"]
+
+[resource]
+script = ExtResource("1_fmlc4")
+health = 0
+damage = 0
+mana = 0
+name = ""

@@ -1,5 +1,6 @@
+@icon("./icons/anchor.svg")
+class_name A_Weapon
 extends Resource
-class_name A_Weapon, "./icons/anchor.svg"
 
 @export var damage : int
 @export var level : int

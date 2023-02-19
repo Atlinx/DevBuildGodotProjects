@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="A_Adventurer" load_steps=2 format=3 uid="uid://82lljagv56n7"]
+
+[ext_resource type="Script" path="res://scripts_parent/scripts/adventurer.gd" id="1_rat48"]
+
+[resource]
+script = ExtResource("1_rat48")
+health = 0
+damage = 0
+mana = 0
+name = ""
